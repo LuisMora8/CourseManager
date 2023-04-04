@@ -8,6 +8,17 @@ db = SQLAlchemy(app)
 
 
 # Database Models
+class Login(db.Model):
+    username = db.Column(db.String, unique=True, nullable=False, primary_key=True)
+    password = db.Column(db.String, unique=True, nullable=False)
+    role = db.Column(db.String, nullable=False)
+
+    def __init__(self, username, password, role) -> None:
+        super().__init__()
+        self.username = username
+        self.password = password
+        self.role = role
+
 class Students(db.Model):
     # Static variable to create unique key
     numkey = 0
