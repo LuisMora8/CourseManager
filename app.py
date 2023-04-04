@@ -93,7 +93,7 @@ class Professor(db.Model):
 # Home Page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('student.html')
 
 
 # Driver Code
