@@ -7,17 +7,39 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite://grades.sqlite"
 db = SQLAlchemy(app)
 
 
-# Database Grades mode
-# LAB7 EXAMPLE
-class Grades(db.Model):
-    name = db.Column(db.String, unique=True, primary_key=True, nullable=False)
-    grade = db.Column(db.String)
+# Database Models
 
-    def __init__(self, name, grade) -> None:
+class Students(db.Model):
+    # Static variable to create unique key
+    numkey = 0
+
+    student_numkey = db.Column(db.Integer)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+
+    def __init__(self, first, last) -> None:
         super().__init__()
-        self.name = name
-        self.grade = grade
+        Students.numkey += 1
+        self.student_numkey = Students.numkey
+        self.first_name = first
+        self.last_name = last
 
+class Grades(db.Model):
+    # Static variable to create unique key
+    numkey = 0
+
+    grade_numkey = db.Column(db.Integer)
+    student_numkey = db.Column(db.Integer)
+    class_numkey = db.Column(db.Integer)
+    grade = db.Column(db.Double)
+
+    def __init__(self, student_key, class_key, grade) -> None:
+        super().__init__()
+        Grades.numkey += 1
+        self.grade_numkey = Grades.numkey
+        self.student_numkey = student_key
+        self.class_numkey = class_key
+        self.grade = grade
 
 # Home Page
 @app.route('/')
