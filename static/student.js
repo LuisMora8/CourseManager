@@ -11,6 +11,26 @@ var data = [
     "prof": "Ammon Hepworth",
     "time": "W",
     "enrollment": "6/10"
+  }, {
+    "course": "CS 106",
+    "prof": "Ammon Hepworth",
+    "time": "W",
+    "enrollment": "6/10"
+  }, {
+    "course": "CS 106",
+    "prof": "Ammon Hepworth",
+    "time": "W",
+    "enrollment": "6/10"
+  }, {
+    "course": "CS 106",
+    "prof": "Ammon Hepworth",
+    "time": "W",
+    "enrollment": "6/10"
+  }, {
+    "course": "CS 106",
+    "prof": "Ammon Hepworth",
+    "time": "W",
+    "enrollment": "6/10"
   }
 ];
 
