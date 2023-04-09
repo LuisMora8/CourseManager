@@ -9,17 +9,17 @@ from models import Students, Grades, Classes, Professor, Login, app, db
 
 
 # Home Page
-@app.route('/')
-def index():
-    return render_template('index.html')
-
 #@app.route('/')
-#def student_schedule():
-#    db.session.drop()
+#def index():
+#    return render_template('student.html')
+
+@app.route('/')
+def student_schedule():
+    db.session.drop()
     # prof =  Professor('Ammon', 'Hepworth');
     # db.session.add(prof);
     # db.session.commit();
-#    return render_template('student.html')
+    return render_template('student.html')
     
 
 # Driver Code
