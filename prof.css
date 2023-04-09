@@ -61,13 +61,13 @@ body {
 }
 
 #bottomlayer {
-    width: 84%;
-    height: 100%;
+    width: 85%;
+    height: 10%;
     padding-top: 5%;
     border-style: double;
-    position: relative;
-    left: 10%;
-    top: 0%;
+    position: absolute;
+    left: 11%;
+    top: 30%px;
     background-color: blueviolet;
    
     /* overflow-x: auto; */
