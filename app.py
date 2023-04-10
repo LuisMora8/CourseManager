@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-# from Flask-SQLAlchemy import SQLalchemy
-import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+# import SQLAlchemy
 # Flask and SQLDatabase configuaration
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///students.sqlite"
@@ -13,7 +13,7 @@ class Login(db.Model):
     password = db.Column(db.String, unique=True, nullable=False)
     role = db.Column(db.String, nullable=False)
 
-    def __init__(self, username, password, role) -> None:
+    def __init__(self, username, password, role) :
         super().__init__()
         self.username = username
         self.password = password
@@ -27,7 +27,7 @@ class Students(db.Model):
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
 
-    def __init__(self, first, last) -> None:
+    def __init__(self, first, last) :
         super().__init__()
         Students.numkey += 1
         self.student_numkey = Students.numkey
@@ -43,7 +43,7 @@ class Grades(db.Model):
     class_numkey = db.Column(db.Integer)
     grade = db.Column(db.Float)
 
-    def __init__(self, student_key, class_key, grade) -> None:
+    def __init__(self, student_key, class_key, grade) :
         super().__init__()
         Grades.numkey += 1
         self.grade_numkey = Grades.numkey
@@ -63,7 +63,7 @@ class Classes(db.Model):
     days = db.Column(db.String)
     enrolled = db.Column(db.Integer)
 
-    def __init__(self, name, prof_key, start, end, days, enrolled) -> None:
+    def __init__(self, name, prof_key, start, end, days, enrolled) :
         super().__init__()
         Classes.numkey += 1
         self.class_numkey = Classes.numkey
@@ -82,7 +82,7 @@ class Professor(db.Model):
     prof_name = db.Column(db.Integer)
     class_numkey = db.Column(db.Integer)
 
-    def __init__(self, name, class_key) -> None:
+    def __init__(self, name, class_key) :
         super().__init__()
         Professor.numkey += 1
         self.prof_numkey = Professor.numkey
@@ -97,7 +97,7 @@ def index():
 
 # prof Page
 @app.route('/prof')
-def index():
+def index2():
     # query the database and retrieve the data
     data = Professor.query.all()
 
