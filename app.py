@@ -6,12 +6,8 @@ from models import Students, Grades, Classes, Professor, Login, app, db
 #Home Page
 @app.route('/')
 def index():
-    # student = Students.query.filter_by(first_name="Jose").first()
-    # print(student.first_name)
-    # login = Login('josesantos@ucmerced.edu', 1234, 'student',student)
-    # db.session.add(login)
-    # db.session.commit()
     return render_template('index.html')
+
 
 
 # Student View Courses
@@ -45,6 +41,7 @@ def student_schedule(id):
     # grade = Grades(4,student,course,77)
     # db.session.add(grade)
     # db.session.commit()
+
     
 # Convert the grades from objects to dictionary (for JSON)
 def courses_to_dict(list):
