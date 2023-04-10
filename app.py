@@ -21,13 +21,21 @@ def student_schedule(id):
     # Query Student's in Grades to find Classes
     grades = Grades.query.filter_by(student_id=id)
 
-    # Query the Classes 
-    courses = []
-    for grade in grades:
-        courses.append(Classes.query.filter_by(id=grade.class_id).first())
-    data = courses_to_dict(courses)
-    # Return query as dictionary
-    return render_template('student.html', data=data)
+    if(request.method == 'GET'):
+        # Query the Student's Classes 
+        courses = []
+        for grade in grades:
+            courses.append(Classes.query.filter_by(id=grade.class_id).first())
+        data = courses_to_dict(courses)
+        # Return query as dictionary
+        return render_template('student.html', data=data)
+
+    elif(request.method == 'POST'):
+        # Query all the classes
+        courses = [[]]
+        for grade in grades:
+            courses.append(Classes.query.all())
+        data = courses_to_dict(courses)
 
     # student = Students(4, "Li", "Cheng")
     # db.session.add(student)
