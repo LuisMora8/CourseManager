@@ -3,7 +3,7 @@
   <head>
     <script src="{{ url_for('static',filename='student.js') }}"></script>
   </head>
-  <body onload="displayCourses()">
+  <body onload="displayCourses({{data}})">
     <div id="courselist"></div>
   </body>
 </html>

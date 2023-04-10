@@ -13,12 +13,15 @@ class Login(db.Model):
     username = db.Column(db.String, unique=True, nullable=False, primary_key=True)
     password = db.Column(db.String, unique=True, nullable=False)
     role = db.Column(db.String, nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    student = db.relationship('Students', backref=db.backref('user'))
 
-    def __init__(self, username, password, role) -> None:
+    def __init__(self, username, password, role, student) -> None:
         super().__init__()
         self.username = username
         self.password = password
         self.role = role
+        self.student = student
 
 class Students(db.Model):
     __tablename__ = 'students'
