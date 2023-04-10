@@ -53,6 +53,5 @@ def courses_to_dict(list):
 # Driver Code
 if __name__ == '__main__':
     with app.app_context():
-        #db.metadata.drop_all(bind=db.engine, tables=[Login.__table__])
         db.create_all()
     app.run(debug=True)

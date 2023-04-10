@@ -1,39 +1,3 @@
-// Dummy data to create table from function
-// var data = [
-//   {
-//     "course": "Physics 121",
-//     "prof": "Susan Walker",
-//     "time": "TR",
-//     "enrollment": "5/10"
-//   },
-//   {
-//     "course": "CS 106",
-//     "prof": "Ammon Hepworth",
-//     "time": "W",
-//     "enrollment": "6/10"
-//   }, {
-//     "course": "CS 106",
-//     "prof": "Ammon Hepworth",
-//     "time": "W",
-//     "enrollment": "6/10"
-//   }, {
-//     "course": "CS 106",
-//     "prof": "Ammon Hepworth",
-//     "time": "W",
-//     "enrollment": "6/10"
-//   }, {
-//     "course": "CS 106",
-//     "prof": "Ammon Hepworth",
-//     "time": "W",
-//     "enrollment": "6/10"
-//   }, {
-//     "course": "CS 106",
-//     "prof": "Ammon Hepworth",
-//     "time": "W",
-//     "enrollment": "6/10"
-//   }
-// ];
-
 // Display the courses as a table
 function displayCourses(data) {
   console.log(data);
