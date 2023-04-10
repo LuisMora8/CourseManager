@@ -2,23 +2,23 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from models import Students, Grades, Classes, Professor, Login, app, db
 
-# # Flask and SQLDatabase configuaration
-# app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///students.sqlite"
-# db = SQLAlchemy(app)
 
-
-# Home Page
-#@app.route('/')
-#def index():
-#    return render_template('student.html')
-
+#Home Page
 @app.route('/')
+def index():
+   return render_template('index.html')
+
+# Student View Courses
+@app.route('/<student>')
 def student_schedule():
-    db.session.drop()
-    # prof =  Professor('Ammon', 'Hepworth');
-    # db.session.add(prof);
-    # db.session.commit();
+    # student = Students(4, "Li", "Cheng")
+    # db.session.add(student)
+    # db.session.commit()
+    # student = Students.query.filter_by(first_name="John").first()
+    # course = Classes.query.filter_by(class_name="Math 101").first()
+    # grade = Grades(4,student,course,77)
+    # db.session.add(grade)
+    # db.session.commit()
     return render_template('student.html')
     
 

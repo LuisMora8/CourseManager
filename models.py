@@ -8,6 +8,8 @@ db = SQLAlchemy(app)
 
 # Database Models
 class Login(db.Model):
+    __tablename__ = 'login'
+
     username = db.Column(db.String, unique=True, nullable=False, primary_key=True)
     password = db.Column(db.String, unique=True, nullable=False)
     role = db.Column(db.String, nullable=False)
@@ -19,71 +21,66 @@ class Login(db.Model):
         self.role = role
 
 class Students(db.Model):
-    # Static variable to create unique key
-    numkey = 0
+    __tablename__ = 'students'
 
-    student_numkey = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
 
-    def __init__(self, first, last) -> None:
+    def __init__(self, id, first, last) -> None:
         super().__init__()
-        Students.numkey += 1
-        self.student_numkey = Students.numkey
+        self.id = id
         self.first_name = first
         self.last_name = last
 
 class Grades(db.Model):
-    # Static variable to create unique key
-    numkey = 0
+    __tablename__ = 'grades'
 
-    grade_numkey = db.Column(db.Integer, primary_key=True)
-    student_numkey = db.Column(db.Integer)
-    class_numkey = db.Column(db.Integer)
+    numkey = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    student = db.relationship('Students', backref=db.backref('students'))
+    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
+    course = db.relationship('Classes', backref=db.backref('classes'))
     grade = db.Column(db.Float)
 
-    def __init__(self, student_key, class_key, grade) -> None:
+    def __init__(self, numkey, student, course, grade) -> None:
         super().__init__()
-        Grades.numkey += 1
-        self.grade_numkey = Grades.numkey
-        self.student_numkey = student_key
-        self.class_numkey = class_key
+        self.numkey = numkey
+        self.student = student
+        self.course = course
         self.grade = grade
 
 class Classes(db.Model):
-    # Static variable to create unique key
-    numkey = 0
+    __tablename__ = 'classes'
 
-    class_numkey = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     class_name = db.Column(db.String)
-    prof_numkey = db.Column(db.Integer)
+    prof_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
+    prof = db.relationship('Professor', backref=db.backref('profesor'))
     start_time = db.Column(db.String)
     end_time = db.Column(db.String)
     days = db.Column(db.String)
     enrolled = db.Column(db.Integer)
 
-    def __init__(self, name, prof_key, start, end, days, enrolled) -> None:
+    def __init__(self, id, prof, name, start, end, days, enrolled) -> None:
         super().__init__()
-        Classes.numkey += 1
-        self.class_numkey = Classes.numkey
+        self.id = id
+        self.prof = prof
         self.class_name = name
-        self.prof_numkey = prof_key
         self.start_time = start
         self.end_time = end
         self.days = days
         self.enrolled = enrolled
 
 class Professor(db.Model):
-    # Static variable to create unique key
-    numkey = 0
+    __tablename__ = 'professor'
 
-    prof_numkey = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.Integer)
     last_name = db.Column(db.Integer)
 
-    def __init__(self, first, last) -> None:
+    def __init__(self, id, first, last) -> None:
         super().__init__()
-        Professor.numkey += 1
-        self.prof_numkey = Professor.numkey
+        self.id = id
         self.first_name = first
         self.last_name = last
