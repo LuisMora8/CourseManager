@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-from flask_sqlalchemy import SQLAlchemy
-
+# from Flask-SQLAlchemy import SQLalchemy
+import SQLAlchemy
 # Flask and SQLDatabase configuaration
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///students.sqlite"
@@ -94,6 +94,16 @@ class Professor(db.Model):
 @app.route('/')
 def index():
     return render_template('student.html')
+
+# prof Page
+@app.route('/prof')
+def index():
+    # query the database and retrieve the data
+    data = Professor.query.all()
+
+    # pass the data to the template
+    return render_template('Professor.html', data=data)
+    # return render_template('Professor.html')
 
 
 # Driver Code
