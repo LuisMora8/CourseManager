@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,redirect
 from flask_sqlalchemy import SQLAlchemy
 from models import Students, Grades, Classes, Professor, Login, app, db
 
@@ -12,15 +12,39 @@ def index():
 @app.route('/prof')
 def index2():
     #query
-    query = db.session.query(Professor.id,Professor.first_name,Professor.last_name, Classes.start_time,Classes.end_time,Classes.days,Classes.enrolled).\
+    query = db.session.query(Classes.class_name,Professor.id,Professor.first_name,Professor.last_name, Classes.start_time,Classes.end_time,Classes.days,Classes.enrolled).\
         join(Classes).\
         filter(Professor.id == Classes.prof_id).\
             group_by(Classes.class_name)
+    
 
     query = prof_to_dict(query)
 
     # pass the data to the template
     return render_template('Professor.html', data=query)
+
+#class grades
+@app.route('/classGrades/<id>',methods = ['GET'])
+def showClass(id):
+    print(id)
+    #query
+    query = db.session.query( Students.first_name,Students.last_name,Grades.grade).\
+        join(Grades).\
+        filter(Students.id == Grades.student_id)
+        # filter(Classes.prof_id == id)
+            # group_by(Classes.class_name)
+    
+    query = grades_to_dict(query)
+
+    courseName = str(Classes.class_name)
+    for i in query:
+        print(i)
+    return render_template('showClassGrades.html',data=query,className= id)
+
+    if(request.method == "GET"):
+        print("hello there")
+        # return redirect('showClassGrades')
+        return render_template('showClassGrades.html')
 
 
 # Student View Courses
@@ -36,6 +60,7 @@ def student_schedule(id):
         for grade in grades:
             courses.append(Classes.query.filter_by(id=grade.class_id).first())
         data = courses_to_dict(courses)
+        
         # Return query as dictionary
         return render_template('student.html', data=data)
 
@@ -55,13 +80,24 @@ def student_schedule(id):
     # db.session.add(grade)
     # db.session.commit()
 
+# Convert the student grades from objects to dictionary (for JSON)
+def grades_to_dict(list):
+    output = []
+    for gradesData in list:
+        c = {}
+        c["studentName"] = gradesData.first_name + " " + gradesData.last_name
+        c["grades"] = gradesData.grade
+        
+        output.append(c)
+    return output
 
-# Convert the grades from objects to dictionary (for JSON)
+# Convert the professor classes from objects to dictionary (for JSON)
 def prof_to_dict(list):
     output = []
     for profData in list:
         c = {}
         c["id"] = profData.id
+        c["className"] = profData.class_name
         c["profName"] = profData.first_name + " " + profData.last_name
         c["time"] = profData.days + " "+ profData.start_time + " "+profData.end_time
         c["enrolled"] = profData.enrolled
@@ -73,6 +109,7 @@ def prof_to_dict(list):
 # Convert the grades from objects to dictionary (for JSON)
 def courses_to_dict(list):
     output = []
+    
     for course in list:
         c = {}
         c["course"] = course.class_name
@@ -80,6 +117,7 @@ def courses_to_dict(list):
         c["time"] = course.days + " " + course.start_time + " " + course.end_time
         c["enrollment"] = course.enrolled
         output.append(c)
+
     return output
 
 # Driver Code
