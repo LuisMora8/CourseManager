@@ -2,8 +2,16 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from models import Students, Grades, Classes, Professor, Login, app, db
 
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
-#Home Page
+# Admin Subclass
+class ChildView(ModelView):
+    column_display_pk = True # I like to see the IDs in the list
+    column_hide_backrefs = False
+    #column_list = ('id', 'name', 'parent')
+
+# Home Page
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -165,6 +173,14 @@ def registration_courses_to_dict(student_classes, all_courses):
 
 # Driver Code
 if __name__ == '__main__':
+
+# Admin
     with app.app_context():
         db.create_all()
+        admin = Admin(app)
+        admin.add_view(ChildView(Login, db.session))
+        admin.add_view(ChildView(Students, db.session))
+        admin.add_view(ChildView(Professor, db.session))
+        admin.add_view(ChildView(Classes, db.session))
+        admin.add_view(ChildView(Grades, db.session))
     app.run(debug=True)
