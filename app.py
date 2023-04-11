@@ -74,33 +74,16 @@ def index2():
 @app.route('/<name>/<grade>',methods = ['GET'])
 def updateData(name,grade):
     dict = {'StuGrade':grade}
-    # print(dict["StuGrade"])
-    # print(name)
-    # print(grade)
+    
     name = name.split(" ")
     print(name[0])
-    # query = db.session.query( Students.first_name,Students.last_name,Grades.grade).\
-    #     join(Grades).\
-    #     filter(Students.id == Grades.student_id,Students.first_name == name[0],Students.last_name == name[1])
-    # print(query.grades_grade)
-    # for i in query:
-    #     print(i)
-    # query.grade = dict["StuGrade"]
-    
-    # db.session.commit()
 
     student = Students.query.filter_by(first_name=name[0], last_name=name[1]).first()
     result = Grades.query.filter_by(student_id=student.id).first()
 
     result.grade=grade
     db.session.commit()
-    # print(query.grade)
-    # query = grades_to_dict(result)
 
-    # for i in query:
-    #     print(i)
-    # print(query.grade)
-    # return render_template('showClassGrades.html',data=query,className= 3)
     return 0
 
 #class grades
@@ -128,38 +111,38 @@ def showClass(id):
         return render_template('showClassGrades.html')
 
 
-# Student View Courses
-@app.route('/student/<id>', methods=['GET'])
-def student_schedule(id):
+# # Student View Courses
+# @app.route('/student/<id>', methods=['GET'])
+# def student_schedule(id):
 
-    # Query Student's in Grades to find Classes
-    grades = Grades.query.filter_by(student_id=id)
+#     # Query Student's in Grades to find Classes
+#     grades = Grades.query.filter_by(student_id=id)
 
-    if(request.method == 'GET'):
-        # Query the Student's Classes 
-        courses = []
-        for grade in grades:
-            courses.append(Classes.query.filter_by(id=grade.class_id).first())
-        data = courses_to_dict(courses)
+#     if(request.method == 'GET'):
+#         # Query the Student's Classes 
+#         courses = []
+#         for grade in grades:
+#             courses.append(Classes.query.filter_by(id=grade.class_id).first())
+#         data = courses_to_dict(courses)
         
-        # Return query as dictionary
-        return render_template('student.html', data=data)
+#         # Return query as dictionary
+#         return render_template('student.html', data=data)
 
-    elif(request.method == 'POST'):
-        # Query all the classes
-        courses = [[]]
-        for grade in grades:
-            courses.append(Classes.query.all())
-        data = courses_to_dict(courses)
+#     elif(request.method == 'POST'):
+#         # Query all the classes
+#         courses = [[]]
+#         for grade in grades:
+#             courses.append(Classes.query.all())
+#         data = courses_to_dict(courses)
 
-    # student = Students(4, "Li", "Cheng")
-    # db.session.add(student)
-    # db.session.commit()
-    # student = Students.query.filter_by(first_name="John").first()
-    # course = Classes.query.filter_by(class_name="Math 101").first()
-    # grade = Grades(4,student,course,77)
-    # db.session.add(grade)
-    # db.session.commit()
+#     # student = Students(4, "Li", "Cheng")
+#     # db.session.add(student)
+#     # db.session.commit()
+#     # student = Students.query.filter_by(first_name="John").first()
+#     # course = Classes.query.filter_by(class_name="Math 101").first()
+#     # grade = Grades(4,student,course,77)
+#     # db.session.add(grade)
+#     # db.session.commit()
 
 # Convert the student grades from objects to dictionary (for JSON)
 def grades_to_dict(list):
@@ -317,21 +300,7 @@ def courses_to_dict(list):
 
     return output
 
-# Convert the grades from objects to dictionary (for JSON)
-def registration_courses_to_dict(student_classes, all_courses):
-    output = []
-    for course in all_courses:
-        c = {}
-        c["course"] = course.class_name
-        c["prof"] = course.prof.first_name + " " + course.prof.last_name
-        c["time"] = course.days + " " + course.start_time + " " + course.end_time
-        c["enrollment"] = course.enrolled
-        if(course in student_classes):
-            c["enrolled"] = True
-        else:
-            c["enrolled"] = False
-        output.append(c)
-    return output
+
 
 # Convert the grades from objects to dictionary (for JSON)
 def registration_courses_to_dict(student_classes, all_courses):
