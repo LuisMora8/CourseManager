@@ -23,10 +23,44 @@ def index2():
     # pass the data to the template
     return render_template('Professor.html', data=query)
 
+
+@app.route('/<name>/<grade>',methods = ['GET'])
+def updateData(name,grade):
+    dict = {'StuGrade':grade}
+    # print(dict["StuGrade"])
+    # print(name)
+    # print(grade)
+    name = name.split(" ")
+    print(name[0])
+    # query = db.session.query( Students.first_name,Students.last_name,Grades.grade).\
+    #     join(Grades).\
+    #     filter(Students.id == Grades.student_id,Students.first_name == name[0],Students.last_name == name[1])
+    # print(query.grades_grade)
+    # for i in query:
+    #     print(i)
+    # query.grade = dict["StuGrade"]
+    
+    # db.session.commit()
+
+    student = Students.query.filter_by(first_name=name[0], last_name=name[1]).first()
+    result = Grades.query.filter_by(student_id=student.id).first()
+
+    result.grade=grade
+    db.session.commit()
+    # print(query.grade)
+    # query = grades_to_dict(result)
+
+    # for i in query:
+    #     print(i)
+    # print(query.grade)
+    # return render_template('showClassGrades.html',data=query,className= 3)
+    return 0
+
 #class grades
 @app.route('/classGrades/<id>',methods = ['GET'])
 def showClass(id):
     print(id)
+
     #query
     query = db.session.query( Students.first_name,Students.last_name,Grades.grade).\
         join(Grades).\

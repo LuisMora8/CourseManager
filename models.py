@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 # Flask and SQLDatabase configuaration
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///students.sqlite"
 db = SQLAlchemy(app)
 
@@ -11,7 +12,7 @@ class Login(db.Model):
     __tablename__ = 'login'
 
     username = db.Column(db.String, unique=True, nullable=False, primary_key=True)
-    password = db.Column(db.String, unique=True, nullable=False)
+    password = db.Column(db.String, nullable=False)
     role = db.Column(db.String, nullable=False)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     student = db.relationship('Students', backref=db.backref('user'))
@@ -79,8 +80,8 @@ class Professor(db.Model):
     __tablename__ = 'professor'
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.Integer)
-    last_name = db.Column(db.Integer)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
 
     def __init__(self, id, first, last) :
         super().__init__()
