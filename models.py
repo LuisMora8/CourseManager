@@ -79,8 +79,8 @@ class Professor(db.Model):
     __tablename__ = 'professor'
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.Integer)
-    last_name = db.Column(db.Integer)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
 
     def __init__(self, id, first, last) :
         super().__init__()
