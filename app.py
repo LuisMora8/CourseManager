@@ -6,15 +6,6 @@ from models import Students, Grades, Classes, Professor, Login, app, db
 #Home Page
 @app.route('/')
 def index():
-    # student = Students.query.filter_by(first_name="Jose").first()
-    # print(student.first_name)
-    # login = Login('josesantos@ucmerced.edu', 1234, 'student',student)
-    # db.session.add(login)
-    # db.session.commit()
-
-    # people = Professor.query.all()
-    # for i in people:
-    #     print(i)
     return render_template('index.html')
 
 # prof Page
@@ -39,13 +30,21 @@ def student_schedule(id):
     # Query Student's in Grades to find Classes
     grades = Grades.query.filter_by(student_id=id)
 
-    # Query the Classes 
-    courses = []
-    for grade in grades:
-        courses.append(Classes.query.filter_by(id=grade.class_id).first())
-    data = courses_to_dict(courses)
-    # Return query as dictionary
-    return render_template('student.html', data=data)
+    if(request.method == 'GET'):
+        # Query the Student's Classes 
+        courses = []
+        for grade in grades:
+            courses.append(Classes.query.filter_by(id=grade.class_id).first())
+        data = courses_to_dict(courses)
+        # Return query as dictionary
+        return render_template('student.html', data=data)
+
+    elif(request.method == 'POST'):
+        # Query all the classes
+        courses = [[]]
+        for grade in grades:
+            courses.append(Classes.query.all())
+        data = courses_to_dict(courses)
 
     # student = Students(4, "Li", "Cheng")
     # db.session.add(student)
