@@ -11,27 +11,31 @@ def index():
     # login = Login('josesantos@ucmerced.edu', 1234, 'student',student)
     # db.session.add(login)
     # db.session.commit()
+
+    # people = Professor.query.all()
+    # for i in people:
+    #     print(i)
     return render_template('index.html')
 
 # prof Page
 @app.route('/prof')
 def index2():
-    # query the database and retrieve the data
-    data = Professor.query.all()
+    
+    query = db.session.query(Professor.id,Professor.first_name,Professor.last_name, Classes.start_time,Classes.end_time,Classes.days,Classes.enrolled).\
+        join(Classes).\
+        filter(Professor.id == Classes.prof_id).\
+            group_by(Classes.class_name)
+
+    query = prof_to_dict(query)
+    for i in query:
+            print(i)
+    
 
     # pass the data to the template
-    return render_template('Professor.html', data=data)
+    return render_template('Professor.html', data=query)
     # return render_template('Professor.html')
 
-# prof Page
-@app.route('/prof')
-def index2():
-    # query the database and retrieve the data
-    data = Professor.query.all()
 
-    # pass the data to the template
-    return render_template('Professor.html', data=data)
-    # return render_template('Professor.html')
 
 
 # Student View Courses
@@ -57,7 +61,22 @@ def student_schedule(id):
     # grade = Grades(4,student,course,77)
     # db.session.add(grade)
     # db.session.commit()
-    
+
+
+# Convert the grades from objects to dictionary (for JSON)
+def prof_to_dict(list):
+    output = []
+    for profData in list:
+        c = {}
+        c["id"] = profData.id
+        c["profName"] = profData.first_name + " " + profData.last_name
+        c["time"] = profData.days + " "+ profData.start_time + " "+profData.end_time
+        c["enrolled"] = profData.enrolled
+        
+        output.append(c)
+    return output
+
+
 # Convert the grades from objects to dictionary (for JSON)
 def courses_to_dict(list):
     output = []

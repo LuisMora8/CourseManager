@@ -1,9 +1,8 @@
-from app import db, Professor
-prof1 = Professor(prof_numkey = 1,prof_name = "Angelo kyrilov", class_numkey = 2)
-prof2 = Professor(prof_numkey = 2,prof_name = "Santosh Chandrasekhar", class_numkey = 3)
+from app import db
+from models import Students, Grades, Classes, Professor, Login, app, db
+from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 
-# student1 = User(name='Erick Vargas', grade= 45.3)
-# student2 = User(name='Abel Getachew', grade=12.2)
-db.session.add(prof1)
-db.session.add(prof2)
-db.session.commit()
+people = Professor.query.all()
+for i in people:
+    print(i)
