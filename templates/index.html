@@ -4,21 +4,22 @@
 	<meta charset="UTF-8">
 	<title>ACME University </title>
 	<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+	<script src="{{ url_for('static',filename='login.js') }}"></script>
 </head>
 <body>
-	<div class="container">
+	<form action="url" class="container" name="loggedin">
 		<h1 class="label">ACME University</h1>
-		<form class="login_form" action="student.html" method="post" name="form" onsubmit="return authentication()">
+		<div class="login_form">
 			<div class="font">Username</div>
-			<input autocomplete="off" type="text" name="email">
+			<input autocomplete="off" type="text" id="email">
 			<div id="email_error">Please fill Username</div>
 			<div class="font font2">Password</div>
 			<input type="password" name="password">
 			<div id="pass_error">Please fill up your Password</div>
-			<input type="submit" value="Login" class="submit-btn" onclick="auth()" />
+			<input type="button" value="Login" class="submit-btn" onclick="auth_login()" />
 		</form>
 	</div>	
-	<script src="login.js"> </script>
+	<!-- <script src="login.js"> </script>
 	<script>
 		function auth() {
 			var email = document.getElementById("email").value;
@@ -33,7 +34,7 @@
 			}
 
 		}
-	</script>
+	</script> -->
 </body>
 </html>
 

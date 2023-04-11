@@ -1,9 +1,9 @@
-var URL = "http://127.0.0.1:5000/1";
+let BASE = "http://127.0.0.1:5000";
 
 // Display the courses as a table
-function displayStudentsCourses() {
+function displayStudentsCourses(url) {
   var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", URL+'/your-courses');
+  xhttp.open("GET", BASE+url+'/your-courses');
   xhttp.onload = function() {
     let data = JSON.parse(this.responseText);
     createScheduleTable(data)
@@ -27,9 +27,9 @@ function createScheduleTable(data) {
 }
 
 // Registration table
-function displayRegistration() {
+function displayRegistration(url) {
   var xhttp = new XMLHttpRequest();
-  xhttp.open("GET",URL+"/add-courses");
+  xhttp.open("GET",BASE+url+"/add-courses");
   xhttp.onload = function() {
     let data = JSON.parse(this.responseText);
     createRegistrationTable(data)
@@ -37,10 +37,10 @@ function displayRegistration() {
   xhttp.send();
 }
 
-function addClass(course_name) {
+function addClass(course_name, url) {
   var xhttp = new XMLHttpRequest();
   print(course_name)
-  xhttp.open("POST", URL+'/add-courses/'+course_name);
+  xhttp.open("POST", BASE+url+'/add-courses/'+course_name);
   xhttp.setRequestHeader("Content-Type", "application/json");
   const body = {"course_name": course_name};
   xhttp.onload = function() {
@@ -50,9 +50,9 @@ function addClass(course_name) {
   xhttp.send(JSON.stringify(body));
 }
 
-function removeClass(course_name) {
+function removeClass(course_name, url) {
   var xhttp = new XMLHttpRequest();
-  xhttp.open("DELETE", URL+'/add-courses/'+course_name);
+  xhttp.open("DELETE", BASE+url+'/add-courses/'+course_name);
   xhttp.setRequestHeader("Content-Type", "application/json");
   const body = {"course_name": course_name};
   xhttp.onload = function() {
@@ -73,9 +73,9 @@ function createRegistrationTable(data) {
       table = table + `<td>${data.enrollment}</td>`;
       let course_name = data.course.replace(" ", "%20");
       if (data.enrolled) {
-        table = table + `<td id=register><button onclick="removeClass('${course_name}')">-</button></td>`;
+        table = table + `<td><button onclick="removeClass('${course_name}')">-</button></td>`;
       } else {
-        table = table + `<td id=register><button onclick="addClass('${course_name}')">+</button></td>`;
+        table = table + `<td><button onclick="addClass('${course_name}')">+</button></td>`;
       }
       table += `</tr>`;
     });

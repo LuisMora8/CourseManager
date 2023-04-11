@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from models import Students, Grades, Classes, Professor, Login, app, db
 
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from wtforms.widgets import TextArea
+
+BASE = "http://127.0.0.1:5000"
 
 # Admin Subclasses
 class ChildView(ModelView):
@@ -46,6 +48,12 @@ class ClassesView(ModelView):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+# # Student Page
+# @app.route('/student/<id>', methods=['POST'])
+# def student_home(id):
+#     return render_template('student.html', url='/student/'+ id)
+
 
 # prof Page
 @app.route('/prof')
@@ -91,30 +99,32 @@ def student(username):
     user = Login.query.filter_by(username=username).first()
 
     if(request.method == 'GET'):
-        address = ""
+        address = BASE+'/'+user.role+'/'
         if user.role == 'student':
-            address = '/' + user.role + '/' + user.student_id
-            return redirect (address)
+            address += str(user.student_id)
+            print(address)
+            return address
         elif user.role == 'professor':
             return redirect('/prof')
         else:
             return redirect('/admin')
 
 # Student View Load Courses
-@app.route('/student/<id>', methods=['GET'])
+@app.route('/student/<id>/', methods=['GET', 'POST'])
 def student_schedule(id):
     courses = []
 
     # Query Student's in Grades to find Classes
     grades = Grades.query.filter_by(student_id=id)
 
-    if(request.method == 'GET'):
+    if(request.method == 'GET' or request.method == 'POST'):
         # Query the Student's Classes 
         for grade in grades:
             courses.append(Classes.query.filter_by(id=grade.class_id).first())
         data = courses_to_dict(courses)
         # Return query as dictionary
-        return render_template('student.html', data=data)
+        id = id.replace('.html', '')
+        return render_template('student.html', data=data, url='/student/'+id)
 
 # Return Current Schedule
 @app.route('/student/<id>/your-courses', methods=['GET'])

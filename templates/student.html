@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='student.css') }}">
     <script src="{{ url_for('static',filename='student.js') }}"></script>
   </head>
-  <body onload="displayStudentsCourses({{data}})">
+  <body onload="displayStudentsCourses({{data, url}})">
     <div>
       <div id ="outterlayer">
         <h3 class = "child">Welcome! </h1>
@@ -13,8 +13,8 @@
       </div>
       <div id ="midlayer">
         <button
-        onclick="displayStudentsCourses()">Your Courses</button>
-        <button onclick="displayRegistration()">Add Courses</button>
+        onclick="displayStudentsCourses({{data, url}})">Your Courses</button>
+        <button onclick="displayRegistration({{data, url}})">Add Courses</button>
       </div>
       <div id ="bottomlayer">
         <div id="courselist"></div>
