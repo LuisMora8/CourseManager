@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login Page</title>
-	<style>
+	<title>ACME University </title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<h1 class="label">ACME University</h1>
+		<form class="login_form" action="student.html" method="post" name="form" onsubmit="return authentication()">
+			<div class="font">Username</div>
+			<input autocomplete="off" type="text" name="email">
+			<div id="email_error">Please fill Username</div>
+			<div class="font font2">Password</div>
+			<input type="password" name="password">
+			<div id="pass_error">Please fill up your Password</div>
+			<input type="submit" value="Login" class="submit-btn" onclick="auth()" />
+		</form>
+	</div>	
+	<script src="login.js"> </script>
+	<script>
+		function auth() {
+			var email = document.getElementById("email").value;
+			var password = document.getElementById("password").value; 
+			if(email == "student_example" && password == "password_example"){
+				window.location.assign("student.html");
+				alert("Successful Login");
+			}
+			else{
+				alert("Unsuccesful Login");
+				return;
+			}
+
+		}
+	</script>
+</body>
+</html>
+
+
+<!-- <style>
 		body {
 			font-family: Arial, sans-serif;
 			background-color: #f2f2f2;
@@ -44,16 +78,4 @@
 			text-align: center;
 			margin-top: 30px;
 		}
-	</style>
-</head>
-<body>
-	<form action="login.php" method="post">
-		<h1>Login</h1>
-		<label for="username">Username</label>
-		<input type="text" id="username" name="username" placeholder="Enter your username" required>
-		<label for="password">Password</label>
-		<input type="password" id="password" name="password" placeholder="Enter your password" required>
-		<input type="submit" value="Login">
-	</form>
-</body>
-</html>
+	</style>-->
