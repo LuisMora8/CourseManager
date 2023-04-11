@@ -3,8 +3,18 @@
   <head>
     <script src="{{ url_for('static',filename='student.js') }}"></script>
   </head>
-  <body onload="displayCourses()">
-    <h1>Welcome, Successfully Login Student! </h1>
-    <div id="courselist"></div>
+  <body onload="displayStudentsCourses({{data}})">
+  <h1>Welcome, Successfully Login Student! </h1>
+    <div>
+      <p>Welcome</p>
+      <p>ACME University</p>
+      <p>Signout</p>
+      <div>
+        <button
+        onclick="displayStudentsCourses()">Your Courses</button>
+        <button onclick="displayRegistration()">Add Courses</button>
+      </div>
+      <div id="courselist"></div>
+    </div>
   </body>
 </html>
