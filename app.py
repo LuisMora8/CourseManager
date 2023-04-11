@@ -20,22 +20,16 @@ def index():
 # prof Page
 @app.route('/prof')
 def index2():
-    
+    #query
     query = db.session.query(Professor.id,Professor.first_name,Professor.last_name, Classes.start_time,Classes.end_time,Classes.days,Classes.enrolled).\
         join(Classes).\
         filter(Professor.id == Classes.prof_id).\
             group_by(Classes.class_name)
 
     query = prof_to_dict(query)
-    for i in query:
-            print(i)
-    
 
     # pass the data to the template
     return render_template('Professor.html', data=query)
-    # return render_template('Professor.html')
-
-
 
 
 # Student View Courses
