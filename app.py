@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from models import Students, Grades, Classes, Professor, Login, app, db
 
@@ -84,6 +84,21 @@ def prof_to_dict(list):
         c["enrolled"] = profData.enrolled
         output.append(c)
     return output
+
+# Get Student ID
+@app.route('/<username>', methods=['GET'])
+def student(username):
+    user = Login.query.filter_by(username=username).first()
+
+    if(request.method == 'GET'):
+        address = ""
+        if user.role == 'student':
+            address = '/' + user.role + '/' + user.student_id
+            return redirect (address)
+        elif user.role == 'professor':
+            return redirect('/prof')
+        else:
+            return redirect('/admin')
 
 # Student View Load Courses
 @app.route('/student/<id>', methods=['GET'])

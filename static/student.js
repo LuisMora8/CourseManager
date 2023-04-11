@@ -1,4 +1,4 @@
-let URL = "http://127.0.0.1:5000/student/1";
+var URL = "http://127.0.0.1:5000/1";
 
 // Display the courses as a table
 function displayStudentsCourses() {
@@ -12,7 +12,7 @@ function displayStudentsCourses() {
 }
 
 function createScheduleTable(data) {
-  let table = '<table id="schedule" border="1">';
+  let table = '<table id="schedule">';
   table += `<tr><th>Course Name</th><th>Professor</th><th>Time</th><th>Enrollment</th></tr>`;
   data.forEach((data, index) => {
       table = table + `<tr>`;
@@ -63,7 +63,7 @@ function removeClass(course_name) {
 }
 
 function createRegistrationTable(data) {
-  let table = '<table id="schedule" border="1">';
+  let table = '<table id="schedule">';
     table += `<tr><th>Course Name</th><th>Professor</th><th>Time</th><th>Enrollment</th><th>Add/Remove Class</th></tr>`;
     data.forEach((data, index) => {
       table = table + `<tr>`;
@@ -73,9 +73,9 @@ function createRegistrationTable(data) {
       table = table + `<td>${data.enrollment}</td>`;
       let course_name = data.course.replace(" ", "%20");
       if (data.enrolled) {
-        table = table + `<td><button onclick="removeClass('${course_name}')">-</button></td>`;
+        table = table + `<td id=register><button onclick="removeClass('${course_name}')">-</button></td>`;
       } else {
-        table = table + `<td><button onclick="addClass('${course_name}')">+</button></td>`;
+        table = table + `<td id=register><button onclick="addClass('${course_name}')">+</button></td>`;
       }
       table += `</tr>`;
     });
