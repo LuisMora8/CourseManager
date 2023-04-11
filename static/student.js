@@ -50,9 +50,15 @@ function addClass(course_name) {
   xhttp.send(JSON.stringify(body));
 }
 
+<<<<<<< HEAD
 function removeClass(course_name) {
   var xhttp = new XMLHttpRequest();
   xhttp.open("DELETE", URL+'/add-courses/'+course_name);
+=======
+function removeClass(course_name, url) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("DELETE", BASE+url+'/add-courses/'+course_name);
+>>>>>>> f648643a83b08a593919b453799c1ed98f202d6a
   xhttp.setRequestHeader("Content-Type", "application/json");
   const body = {"course_name": course_name};
   xhttp.onload = function() {
@@ -63,7 +69,11 @@ function removeClass(course_name) {
 }
 
 function createRegistrationTable(data) {
+<<<<<<< HEAD
   let table = '<table id="schedule" border="1">';
+=======
+  let table = '<table id="schedule">';
+>>>>>>> f648643a83b08a593919b453799c1ed98f202d6a
     table += `<tr><th>Course Name</th><th>Professor</th><th>Time</th><th>Enrollment</th><th>Add/Remove Class</th></tr>`;
     data.forEach((data, index) => {
       table = table + `<tr>`;

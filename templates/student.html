@@ -7,15 +7,16 @@
   <body onload="displayStudentsCourses({{data}})">
   <h1>Welcome, Successfully Login Student! </h1>
     <div>
-      <p>Welcome</p>
-      <p>ACME University</p>
-      <p>Signout</p>
-      <div>
+      <div id ="outterlayer">
+        <h3 class = "child">Welcome! </h1>
+        <h1 class = "child1">ACME University</p>
+        <h3 class = "child2" ><a href="http://127.0.0.1:5000/">Signout</a></h3>
+      </div>
+      <div id ="midlayer">
         <button
         onclick="displayStudentsCourses()">Your Courses</button>
         <button onclick="displayRegistration()">Add Courses</button>
       </div>
-      <div id="courselist"></div>
     </div>
   </body>
 </html>
