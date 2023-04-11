@@ -16,7 +16,7 @@ class Login(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     student = db.relationship('Students', backref=db.backref('user'))
 
-    def __init__(self, username, password, role, student) -> None:
+    def __init__(self, username, password, role, student) :
         super().__init__()
         self.username = username
         self.password = password
@@ -30,7 +30,7 @@ class Students(db.Model):
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
 
-    def __init__(self, id, first, last) -> None:
+    def __init__(self, id, first, last):
         super().__init__()
         self.id = id
         self.first_name = first
@@ -46,7 +46,7 @@ class Grades(db.Model):
     course = db.relationship('Classes', backref=db.backref('classes'))
     grade = db.Column(db.Float)
 
-    def __init__(self, numkey, student, course, grade) -> None:
+    def __init__(self, numkey, student, course, grade) :
         super().__init__()
         self.numkey = numkey
         self.student = student
@@ -59,13 +59,13 @@ class Classes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     class_name = db.Column(db.String)
     prof_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
-    prof = db.relationship('Professor', backref=db.backref('profesor'))
+    prof = db.relationship('Professor', backref=db.backref('professor'))
     start_time = db.Column(db.String)
     end_time = db.Column(db.String)
     days = db.Column(db.String)
     enrolled = db.Column(db.Integer)
 
-    def __init__(self, id, prof, name, start, end, days, enrolled) -> None:
+    def __init__(self, id, prof, name, start, end, days, enrolled):
         super().__init__()
         self.id = id
         self.prof = prof
@@ -82,7 +82,7 @@ class Professor(db.Model):
     first_name = db.Column(db.Integer)
     last_name = db.Column(db.Integer)
 
-    def __init__(self, id, first, last) -> None:
+    def __init__(self, id, first, last) :
         super().__init__()
         self.id = id
         self.first_name = first

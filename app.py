@@ -8,6 +8,19 @@ from models import Students, Grades, Classes, Professor, Login, app, db
 def index():
     return render_template('index.html')
 
+# prof Page
+@app.route('/prof')
+def index2():
+    #query
+    query = db.session.query(Professor.id,Professor.first_name,Professor.last_name, Classes.start_time,Classes.end_time,Classes.days,Classes.enrolled).\
+        join(Classes).\
+        filter(Professor.id == Classes.prof_id).\
+            group_by(Classes.class_name)
+
+    query = prof_to_dict(query)
+
+    # pass the data to the template
+    return render_template('Professor.html', data=query)
 
 
 # Student View Courses
@@ -42,7 +55,21 @@ def student_schedule(id):
     # db.session.add(grade)
     # db.session.commit()
 
-    
+
+# Convert the grades from objects to dictionary (for JSON)
+def prof_to_dict(list):
+    output = []
+    for profData in list:
+        c = {}
+        c["id"] = profData.id
+        c["profName"] = profData.first_name + " " + profData.last_name
+        c["time"] = profData.days + " "+ profData.start_time + " "+profData.end_time
+        c["enrolled"] = profData.enrolled
+        
+        output.append(c)
+    return output
+
+
 # Convert the grades from objects to dictionary (for JSON)
 def courses_to_dict(list):
     output = []
