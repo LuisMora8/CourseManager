@@ -4,12 +4,43 @@ from models import Students, Grades, Classes, Professor, Login, app, db
 
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from wtforms.widgets import TextArea
 
-# Admin Subclass
+# Admin Subclasses
 class ChildView(ModelView):
-    column_display_pk = True # I like to see the IDs in the list
+    column_display_pk = True
     column_hide_backrefs = False
     #column_list = ('id', 'name', 'parent')
+
+class LoginView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    list_columns = ('username', 'password', 'role', 'student_id')
+    form_columns = ('username', 'password', 'role', 'student')
+
+class StudentView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    list_columns = ('id', 'first_name', 'last_name')
+    form_columns = ('id', 'first_name', 'last_name')
+
+class ProfessorView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    list_columns = ('id', 'first_name', 'last_name')
+    form_columns = ('id', 'first_name', 'last_name')
+
+class GradesView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    list_columns = ('numkey', 'student_id', 'student','class_id', 'course', 'grade')
+    form_columns = ('numkey', 'student','course', 'grade')
+
+class ClassesView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    list_columns = ('id', 'class_name', 'prof_id','prof', 'start_time', 'end_time', 'days', 'enrolled')
+    form_columns = ('id', 'prof','class_name', 'start_time', 'end_time', 'days', 'enrolled')
 
 # Home Page
 @app.route('/')
@@ -176,11 +207,12 @@ if __name__ == '__main__':
 
 # Admin
     with app.app_context():
+        #Login.__table__.drop(db.engine)
         db.create_all()
         admin = Admin(app)
-        admin.add_view(ChildView(Login, db.session))
-        admin.add_view(ChildView(Students, db.session))
-        admin.add_view(ChildView(Professor, db.session))
-        admin.add_view(ChildView(Classes, db.session))
-        admin.add_view(ChildView(Grades, db.session))
+        admin.add_view(LoginView(Login, db.session))
+        admin.add_view(StudentView(Students, db.session))
+        admin.add_view(ProfessorView(Professor, db.session))
+        admin.add_view(ClassesView(Classes, db.session))
+        admin.add_view(GradesView(Grades, db.session))
     app.run(debug=True)
