@@ -2,9 +2,9 @@
 <html>
   <head>
     <!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/grades.css') }}"> -->
-    <link rel = "stylesheet" href = "Professor.css">
-    <script src="{{ url_for('static',filename='prof.js') }}"></script>
-    <title>Professor's page</title>
+    <!-- <link rel = "stylesheet" href = "Professor.css"> -->
+    <script src="{{ url_for('static',filename='showClassesGrades.js') }}"></script>
+    <title>ClassesGrades page</title>
     <style>
         body {
     background-color: rgb(132, 181, 197);
@@ -50,6 +50,12 @@
    
     /* overflow-x: auto; */
 }
+#backText{
+  position: absolute;
+  left:20%;
+  top:10%
+ 
+}
 .midchild {
     /* display: inline-block; */
     width: 80%;
@@ -71,6 +77,8 @@
     left: 10%;
    
 }
+
+
 #bottomlayer {
     width: 82%;
     height: 40%;
@@ -131,20 +139,25 @@ table {
   }
     </style>
   </head>
-<body onload="displayProfessors({{data}})">
+<body onload="displayClassGrades({{data}})">
   <div id = "outterlayer">
     <h3 class = "child">Welcome Erick!</h3>
     <h1 class = "child1">UC Merced</h1>
     <h3 class = "child2">Sign out</h3>
   </div>
   <div id = "midlayer">
-    <h3 class = "midchild">Your Courses</h3>
+   
+    <h3 class = "midchild">CSE{{className}}</h3>
+    <h4 class = "backText"><a href="/prof">Back</a></h4>
   </div>
   <div id = "bottomlayer">
    
-    <div id="Proflist"></div>
+    <div id="studentGradeslist"></div>
      
   </div>
+  <!-- <div id = "submitButton">
+    <button type = "submit" onclick="submitFunction({{data}})">Submit Changes</button>
+  </div> -->
  
 </body>
 </html>
