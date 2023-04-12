@@ -56,12 +56,12 @@ def index():
 
 
 # prof Page
-@app.route('/prof')
-def index2():
+@app.route('/professor/<id>', methods=['GET', 'POST'])
+def index2(id):
     #query
     query = db.session.query(Classes.class_name,Professor.id,Professor.first_name,Professor.last_name, Classes.start_time,Classes.end_time,Classes.days,Classes.enrolled).\
         join(Classes).\
-        filter(Professor.id == Classes.prof_id).\
+        filter(Professor.id == Classes.prof_id, Professor.id == id).\
             group_by(Classes.class_name)
     
 
@@ -169,16 +169,16 @@ def prof_to_dict(list):
     return output
 
 # Convert the query from objects to dictionary (for JSON)
-def prof_to_dict(list):
-    output = []
-    for profData in list:
-        c = {}
-        c["id"] = profData.id
-        c["profName"] = profData.first_name + " " + profData.last_name
-        c["time"] = profData.days + " "+ profData.start_time + " "+profData.end_time
-        c["enrolled"] = profData.enrolled
-        output.append(c)
-    return output
+# def prof_to_dict(list):
+#     output = []
+#     for profData in list:
+#         c = {}
+#         c["id"] = profData.id
+#         c["profName"] = profData.first_name + " " + profData.last_name
+#         c["time"] = profData.days + " "+ profData.start_time + " "+profData.end_time
+#         c["enrolled"] = profData.enrolled
+#         output.append(c)
+#     return output
 
 # Get Student ID
 @app.route('/<username>', methods=['GET'])
@@ -192,7 +192,9 @@ def student(username):
             print(address)
             return address
         elif user.role == 'professor':
-            return redirect('/prof')
+            address += str(user.professor_id)
+            print(address)
+            return address
         else:
             return redirect('/admin')
 

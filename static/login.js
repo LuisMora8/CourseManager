@@ -44,6 +44,7 @@ function auth_login() {
 		 document.loggedin.submit();
 	}
 	var xhttp = new XMLHttpRequest();
+	console.log(BASE+'/'+username)
   xhttp.open("GET", BASE+'/'+username);
   xhttp.onload = function() {
      let data = this.responseText;
