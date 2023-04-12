@@ -16,6 +16,8 @@ class Login(db.Model):
     role = db.Column(db.String, nullable=False)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     student = db.relationship('Students', backref=db.backref('user'))
+    professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
+    professor = db.relationship('Professor', backref=db.backref('teacher'))
 
     def __init__(self, username, password, role, student) :
         super().__init__()
@@ -78,7 +80,6 @@ class Classes(db.Model):
 
 class Professor(db.Model):
     __tablename__ = 'professor'
-
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)

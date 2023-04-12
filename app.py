@@ -17,8 +17,8 @@ class ChildView(ModelView):
 class LoginView(ModelView):
     column_display_pk = True
     column_hide_backrefs = False
-    list_columns = ('username', 'password', 'role', 'student_id')
-    form_columns = ('username', 'password', 'role', 'student')
+    list_columns = ('username', 'password', 'role', 'student_id', 'professor_id')
+    form_columns = ('username', 'password', 'role', 'student', 'professor')
 
 class StudentView(ModelView):
     column_display_pk = True
@@ -323,8 +323,8 @@ if __name__ == '__main__':
 
 # Admin
     with app.app_context():
-        #Login.__table__.drop(db.engine)
-        db.create_all()
+        Login.__table__.drop(db.engine)
+        #db.create_all()
         admin = Admin(app)
         admin.add_view(LoginView(Login, db.session))
         admin.add_view(StudentView(Students, db.session))
