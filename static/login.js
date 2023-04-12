@@ -39,6 +39,10 @@ let BASE = "http://127.0.0.1:5000";
 // }
 function auth_login() {
 	username=document.getElementById("email").value
+	if(username=='admin'){
+		document.loggedin.action = BASE+'/admin/'
+		 document.loggedin.submit();
+	}
 	var xhttp = new XMLHttpRequest();
   xhttp.open("GET", BASE+'/'+username);
   xhttp.onload = function() {

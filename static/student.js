@@ -1,9 +1,11 @@
 let BASE = "http://127.0.0.1:5000";
+var userurl = ""
 
 // Display the courses as a table
 function displayStudentsCourses(url) {
+  userurl = BASE + url;
   var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", BASE+url+'/your-courses');
+  xhttp.open("GET", userurl+'/your-courses');
   xhttp.onload = function() {
     let data = JSON.parse(this.responseText);
     createScheduleTable(data)
@@ -29,7 +31,8 @@ function createScheduleTable(data) {
 // Registration table
 function displayRegistration(url) {
   var xhttp = new XMLHttpRequest();
-  xhttp.open("GET",BASE+url+"/add-courses");
+  
+  xhttp.open("GET",userurl+"/add-courses");
   xhttp.onload = function() {
     let data = JSON.parse(this.responseText);
     createRegistrationTable(data)
@@ -37,27 +40,27 @@ function displayRegistration(url) {
   xhttp.send();
 }
 
-function addClass(course_name, url) {
+function addClass(course_name) {
   var xhttp = new XMLHttpRequest();
   print(course_name)
-  xhttp.open("POST", BASE+url+'/add-courses/'+course_name);
+  xhttp.open("POST", userurl+'/add-courses/'+course_name);
   xhttp.setRequestHeader("Content-Type", "application/json");
   const body = {"course_name": course_name};
   xhttp.onload = function() {
     let data = JSON.parse(this.responseText);
-    createRegistrationTable(data)
+    //createRegistrationTable(data)
   };
   xhttp.send(JSON.stringify(body));
 }
 
-function removeClass(course_name, url) {
+function removeClass(course_name) {
   var xhttp = new XMLHttpRequest();
-  xhttp.open("DELETE", BASE+url+'/add-courses/'+course_name);
+  xhttp.open("DELETE", userurl+'/add-courses/'+course_name);
   xhttp.setRequestHeader("Content-Type", "application/json");
   const body = {"course_name": course_name};
   xhttp.onload = function() {
     let data = JSON.parse(this.responseText);
-    createRegistrationTable(data)
+    //createRegistrationTable(data)
   };
   xhttp.send(JSON.stringify(body));
 }
