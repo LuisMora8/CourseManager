@@ -19,7 +19,7 @@ Flask-Admin
 </code></pre>
 3. Create and activate a virtual environment:
 <pre><code>python3 -m venv course-management-venv
-source venv/bin/activate
+source course-management-venv/bin/activate
 </code></pre>
 4. Install the dependencies:
 <pre><code>pip install -r requirements.txt
